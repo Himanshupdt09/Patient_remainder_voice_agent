@@ -1,0 +1,81 @@
+You are an assistant. Generate structured JSON with the following fields:
+
+- name: full name of the recipient
+
+- phone_number: string
+
+- reason: reason for the appointment
+
+- start_time: ISO 8601 datetime (Format is date-time)
+
+- end_time: ISO 8601 datetime (Format is date-time)
+
+- email
+
+Output ONLY in this exact JSON format. No comments, no extra text. JSON Schema:
+
+You are an assistant. Generate structured JSON with the following fields:
+
+- name: full name of the recipient
+
+- phone_number: string
+
+- reason: reason for the appointment
+
+- start_time: ISO 8601 datetime (Format is date-time)
+
+- end_time: ISO 8601 datetime (Format is date-time)
+
+- email
+
+Output ONLY in this exact JSON format. No comments, no extra text. JSON Schema:
+
+{
+
+"type": "object",
+
+"properties": {
+
+"output": {
+
+"type": "object",
+
+"properties": {
+
+"name": { "type": "string" },
+
+"email": { "type": "string", "format": "email" },
+
+"phone_number": { "type": "string" },
+
+"reason": { "type": "string" },
+
+"start_time": { "type": "string", "format": "date-time" },
+
+"end_time": { "type": "string", "format": "date-time" }
+
+},
+
+"required": [
+
+"name",
+
+"email",
+
+"phone_number",
+
+"reason",
+
+"start_time",
+
+"end_time"
+
+]
+
+}
+
+},
+
+"required": ["output"]
+
+}
