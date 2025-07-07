@@ -1,43 +1,46 @@
-# 📞 AI Voice Call Reminder Agent for Hospitals
+# 📞 AI Voice Appointment Reminder
 
-An autonomous AI-based voice call system built using `n8n`, Google Calendar, Gemini LLM, and Retell AI that reminds patients of their appointments and handles voice interactions such as rescheduling or connecting to a clinic assistant. This is designed for hospitals and clinics to automate daily appointment reminders through intelligent voice calls.
+An autonomous AI-based voice call system that sends voice reminders to patients about their appointments. Built using `n8n`, Google Calendar, Gemini LLM, and Retell AI, this system is designed to help hospitals and clinics reduce appointment no-shows by calling patients 12 hours before their scheduled visits.
 
 ## 🧠 How It Works
 
-Every day at **9:00 AM**, the automated system:
+Every day at **9:00 AM**, the system:
 
-1. **Schedule Trigger**: Initiates the flow using n8n’s scheduler.
-2. **Google Calendar Events**: Fetches all upcoming appointments using the patient’s calendar events.
-3. **LLM-Based Agent**: A structured agent powered by Google Gemini parses event data (name, number, email, start time, etc.) into clean JSON.
-4. **Retell AI API Call**: The parsed information is sent to Retell’s API, triggering a real-time voice call to the patient.
-5. **Voice Agent Functionality**:
-   - Informs the patient about the doctor’s schedule and appointment details.
+1. **Triggers on Schedule**: The n8n workflow is triggered daily at 9 AM.
+2. **Fetches Appointments**: All Google Calendar events scheduled 12 hours after (i.e., around 9 PM) are fetched.
+3. **LLM Parsing**: A Gemini-based structured agent parses each event to extract details like:
+   - Patient Name  
+   - Phone Number  
+   - Email Address  
+   - Appointment Start and End Time  
+4. **Voice Call Trigger**: The extracted data is passed to Retell AI API.
+5. **Voice Agent**: Retell initiates a call to the patient and:
+   - Reminds them about their upcoming appointment.
    - Offers options to:
-     - ✅ Confirm the appointment.
-     - 🔁 Reschedule the appointment.
-     - ❓ Ask a query.
-     - 👨‍⚕️ Speak directly with a clinic assistant.
+     - ✅ Confirm the appointment
+     - 🔁 Reschedule
+     - ❓ Ask a question
+     - 👨‍⚕️ Talk to a human at the clinic
 
 ## 🖼️ Workflow Diagram
 
 ![Workflow](workflow.png)
 
-## 📋 Steps Inside Workflow
+## 📋 Workflow Steps
 
-- **Schedule Trigger**: Configured to run daily at 9:00 AM.
-- **Google Calendar Node**: `Get many events` to fetch the patient events.
-- **AI Agent Node**: Uses Gemini Chat Model with structured memory and output parser to generate structured details.
-- **Structured Output Parser**: Converts LLM output to usable fields like name, number, email, start_time, etc.
-- **HTTP Request Node**: Sends data to Retell API endpoint to initiate the voice call.
+- **Schedule Trigger (9 AM)**: Fires daily.
+- **Google Calendar - Get Events**: Fetches events scheduled around 9 PM.
+- **Gemini LLM Agent**: Parses appointment event details into structured output.
+- **Output Parser**: Converts parsed LLM text into JSON format.
+- **HTTP Request Node**: Sends data to Retell AI API to trigger voice call.
 
 ## 🔮 Future Improvements
 
-- 📱 Add SMS/WhatsApp fallback in case of missed call.
-- 🧾 Email summary of calls made to the clinic at end of day.
-- 🧠 NLP intent classification from patient response during call.
-- 🌐 Add support for multiple languages for diverse patients.
-- 🔐 Clinic dashboard for logs, failed calls, and reschedules.
-- 📆 Auto-update calendar on successful reschedule via Retell.
-- 🧑‍⚕️ EHR integration for full patient visit history linkage.
-
+- 📱 Add SMS/WhatsApp fallback if call is unanswered  
+- 📧 Email summary to clinic of successful/failed calls  
+- 🌐 Multi-language voice agent for better accessibility  
+- 📊 Admin dashboard for call logs, response tracking  
+- 🔁 Calendar auto-update on successful reschedule  
+- 🧠 AI-driven classification of patient intent in real time  
+- 🧑‍⚕️ Integration with EHR/EMR for complete history sync
 
